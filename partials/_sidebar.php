@@ -31,9 +31,9 @@
             </li>
             <li class="nav-item">
               <?php if ($tipe_user == "admin" || $tipe_user == "kasir") { ?>
-              <a class="nav-link" href="../transaksi/transaksi.php">
+              <a class="nav-link" href="../menu/menu.php">
                 <span class="icon-bg"><i class="mdi mdi-currency-usd menu-icon"></i></span>
-                <span class="menu-title">Transaksi</span>
+                <span class="menu-title">menus</span>
               </a>
               <?php } ?>
             </li>
