@@ -14,7 +14,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <?php if ($tipe_user == "admin" || $tipe_user == "gudang") {?>
+              <?php if ($level == "admin" || $level == "gudang") {?>
               <a class="nav-link" href="../barang/barang.php">
                 <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
                 <span class="menu-title">Barang</span>
@@ -22,15 +22,7 @@
               <?php } ?>
             </li>
             <li class="nav-item">
-              <?php if ($tipe_user == "admin") {?>
-              <a class="nav-link" href="../logging/log.php">
-                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
-                <span class="menu-title">Log</span>
-              </a>
-              <?php } ?>
-            </li>
-            <li class="nav-item">
-              <?php if ($tipe_user == "admin" || $tipe_user == "kasir") { ?>
+              <?php if ($level == "admin" || $level == "pelayan") { ?>
               <a class="nav-link" href="../menu/menu.php">
                 <span class="icon-bg"><i class="mdi mdi-currency-usd menu-icon"></i></span>
                 <span class="menu-title">menus</span>
@@ -49,18 +41,18 @@
                   <div>
                     <div class="d-flex align-items-center">
                       <div class="sidebar-profile-text">
-                        <p class="mb-1"><?=$tipe_user ?></p>
-                        <p class="mb-1"><?=substr($nama , 0, 24); ?></p>
+                        <p class="mb-1"><?=$level ?></p>
+                        <p class="mb-1"><?=substr($username , 0, 24); ?></p>
                       </div>
                     </div>
                   </div>
                   <?php 
-                  if ($tipe_user == "admin") {
+                  if ($level == "admin") {
                     echo "<div class='badge badge-success'>1</div>";
-                  }elseif ($tipe_user == "kasir") {
+                  }elseif ($level == "pelayan") {
                     echo "<div class='badge badge-warning'>2</div>";
                   }
-                  elseif ($tipe_user == "gudang") {
+                  elseif ($level == "chef") {
                     echo "<div class='badge badge-danger'>3</div>";
                   }
                   ?>

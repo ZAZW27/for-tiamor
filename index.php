@@ -1,18 +1,16 @@
+
 <?php 
 include 'config.php';
 SESSION_START();
-if ($_SESSION['tipe_user']=="") {
+if ($_SESSION['level']=="") {
  header("location:pages/log/login.php");
 }
 
 // store the sessions
 $id=$_SESSION['id_user'];
-$nama = $_SESSION['nama'];
-$profile_user = $_SESSION['profile_user'];
-$tipe_user = $_SESSION['tipe_user'];
-$username = $_SESSION['username'];
-$alamat = $_SESSION['alamat'];
-$telpon = $_SESSION['telpon'];
+$password = $_SESSION['password'];
+$level = $_SESSION['level'];
+$username = $_SESSION['nama_user'];
 ?>
 
 <!DOCTYPE html>
@@ -52,14 +50,6 @@ $telpon = $_SESSION['telpon'];
             <span class="mdi mdi-menu"></span>
           </button>
           <div class="search-field d-none d-xl-block">
-            <!-- <form class="d-flex align-items-center h-100" action="#">
-              <div class="input-group">
-                <div class="input-group-prepend bg-transparent">
-                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="Search products" />
-              </div>
-            </form> -->
           </div>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
@@ -68,7 +58,7 @@ $telpon = $_SESSION['telpon'];
                   <img src="assets/images/user_profile/<?=$profile_user?>" alt="image" />
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black"><?=$nama?></p>
+                  <p class="mb-1 text-black"><?=$username?></p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -133,7 +123,8 @@ $telpon = $_SESSION['telpon'];
               </a>
             </li>
             <li class="nav-item">
-              <?php if ($tipe_user == "admin" || $tipe_user == "gudang") {?>
+              <!-- dibawah di sesuain dengan provesi merka baru yang nama namanya sesuain juga -->
+              <?php if ($level == "admin" || $level == "masak") {?>
               <a class="nav-link" href="pages/barang/barang.php">
                 <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
                 <span class="menu-title">Barang</span>
@@ -141,15 +132,7 @@ $telpon = $_SESSION['telpon'];
               <?php } ?>
             </li>
             <li class="nav-item">
-              <?php if ($tipe_user == "admin") {?>
-              <a class="nav-link" href="pages/logging/log.php">
-                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
-                <span class="menu-title">Log</span>
-              </a>
-              <?php } ?>
-            </li>
-            <li class="nav-item">
-              <?php if ($tipe_user == "admin" || $tipe_user == "kasir") { ?>
+              <?php if ($level == "admin" || $level == "kasir") { ?>
               <a class="nav-link" href="pages/menu/menu.php">
                 <span class="icon-bg"><i class="mdi mdi-currency-usd menu-icon"></i></span>
                 <span class="menu-title">menu</span>
@@ -168,18 +151,18 @@ $telpon = $_SESSION['telpon'];
                   <div>
                     <div class="d-flex align-items-center">
                       <div class="sidebar-profile-text">
-                        <p class="mb-1"><?=$tipe_user ?></p>
-                        <p class="mb-1"><?=substr($nama , 0, 20); ?></p>
+                        <p class="mb-1"><?=$level ?></p>
+                        <p class="mb-1"><?=substr($username , 0, 20); ?></p>
                       </div>
                     </div>
                   </div>
                   <?php 
-                  if ($tipe_user == "admin") {
+                  if ($level == "admin") {
                     echo "<div class='badge badge-success'>1</div>";
-                  }elseif ($tipe_user == "kasir") {
+                  }elseif ($level == "kasir") {
                     echo "<div class='badge badge-warning'>2</div>";
                   }
-                  elseif ($tipe_user == "gudang") {
+                  elseif ($level == "gudang") {
                     echo "<div class='badge badge-danger'>3</div>";
                   }
                   ?>

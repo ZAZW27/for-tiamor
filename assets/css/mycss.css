@@ -538,8 +538,9 @@ textarea {
 
 .submit-btn-container{
   position: relative;
-  top: -26px;
+  top: -0px;
   right: 0;
+  -webkit-text-size-adjust: 50%;
 }
 
 .submit-btn-container button{
@@ -697,6 +698,14 @@ width: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.select-meja{
+  position: relative;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 
 @media (max-width: 991.98px){

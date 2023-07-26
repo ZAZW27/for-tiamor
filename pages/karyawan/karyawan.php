@@ -1,7 +1,7 @@
 <?php 
 include '../../config.php';
 SESSION_START();
-if ($_SESSION['tipe_user']=="") {
+if ($_SESSION['level']=="") {
  header("location:../log/login.php");
 }
 
@@ -9,7 +9,7 @@ if ($_SESSION['tipe_user']=="") {
 $id=$_SESSION['id_user'];
 $nama = $_SESSION['nama'];
 $profile_user = $_SESSION['profile_user'];
-$tipe_user = $_SESSION['tipe_user'];
+$level = $_SESSION['level'];
 $username = $_SESSION['username'];
 $alamat = $_SESSION['alamat'];
 $telpon = $_SESSION['telpon'];
@@ -50,7 +50,7 @@ $telpon = $_SESSION['telpon'];
           <div class="content-wrapper table-content">     
             <!-- MAIN TABLE -->
             <div class="container">
-              <?php if ($tipe_user == "admin" || $tipe_user == "kasir") {?>
+              <?php if ($level == "admin" || $level == "kasir") {?>
                 <div class="add-new-record-btn">
                   <a href="tambah.php"><i class="mdi mdi-plus-circle-outline new-record-icon"></i> <span class="new-record-text">Tambah barang baru</span>  </a>
                 </div>
@@ -63,18 +63,18 @@ $telpon = $_SESSION['telpon'];
                         <tr>
                           <th class="table__th"><input id="selectAll" type="checkbox" class="table__select-row" /></th>
                           <th class="table__th">Name</th>
-                          <?php if ($tipe_user == "admin"){echo "<th class='table__th'>Password</th>";}?>
+                          <?php if ($level == "admin"){echo "<th class='table__th'>Password</th>";}?>
                           <th class="table__th">No. Telp</th>
                           <th class="table__th">Alamat</th>
-                          <?php if ($tipe_user == "admin"){echo "<th class='table__th'>Action</th>";}?>
+                          <?php if ($level == "admin"){echo "<th class='table__th'>Action</th>";}?>
                         </tr>
                       </thead>
                       <tbody class="table__tbody">
                         <?php 
-                          if ($tipe_user == "admin") {
+                          if ($level == "admin") {
                             $query = mysqli_query($cons, "SELECT * FROM user ORDER BY nama ASC");
                           }else {
-                            $query = mysqli_query($cons, "SELECT * FROM user WHERE tipe_user='$tipe_user' ORDER BY nama ASC");
+                            $query = mysqli_query($cons, "SELECT * FROM user WHERE level='$level' ORDER BY nama ASC");
                           }
                           
 
@@ -100,16 +100,16 @@ $telpon = $_SESSION['telpon'];
                             <?php } ?>
                             <div class="table-row__info">
                               <p class="table-row__name "><?=$u['nama']?></p>
-                              <?php if ($u['tipe_user'] == 'admin') { ?>
+                              <?php if ($u['level'] == 'admin') { ?>
                               <span class="table-row__small status status--green"><?=$u['username']?></span>
-                              <?php }elseif ($u['tipe_user'] == 'kasir') { ?>
+                              <?php }elseif ($u['level'] == 'kasir') { ?>
                               <span class="table-row__small status status--yellow"><?=$u['username']?></span>
-                              <?php }elseif ($u['tipe_user'] == 'gudang') { ?>
+                              <?php }elseif ($u['level'] == 'gudang') { ?>
                               <span class="table-row__small status status--red"><?=$u['username']?></span>
                               <?php } ?>
                             </div>
                           </td>
-                          <?php if ($tipe_user =="admin") {?>
+                          <?php if ($level =="admin") {?>
                           <td data-column="Password" class="table-row__td"><?=$u['password']?></td>
                           <?php } ?>
                           <td data-column="No. Tlp" class="table-row__td">
@@ -118,7 +118,7 @@ $telpon = $_SESSION['telpon'];
                             </div>
                           </td>
                           <td data-column="Alamat" class="table-row__td"><?=$u['alamat']?></td>
-                          <?php if ($tipe_user == "admin"){?>
+                          <?php if ($level == "admin"){?>
                             <td class="table-row__td">
                               <a href="update.php?id=<?=$u['id_user']?>">
                                 <svg

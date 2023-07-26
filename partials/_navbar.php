@@ -24,7 +24,7 @@
           <img src="../../assets/images/user_profile/<?=$profile_user?>" alt="image" />
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black"><?=$nama?></p>
+            <p class="mb-1 text-black"><?=$username?></p>
           </div>
         </a>
         <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
