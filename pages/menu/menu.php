@@ -55,7 +55,13 @@ include '../../partials/_header.php';
                         <div class="shop-item">
                           <span class="shop-item-id" id="menu-id" hidden><?=$g['id_menu'] ?></span>
                           <span class="shop-item-title" id="menu-name"><?=$g['nama_menu'] ?></span>
+                          <?php if (strpos($g['gambar'], 'https') !== FALSE) { // jika gambarnya berasalh dari link website ======?>
                           <img class="shop-item-image" id="menu-pic" src="<?=$g['gambar'] ?>" />
+                          <?php }elseif ($g['gambar'] == "") { // jika gambar tidak memiliki isi =================================?>
+                          <img class="shop-item-image" id="menu-pic" src="../../assets/gambar-menu/no_food.png" />
+                          <?php }elseif (strpos($g['gambar'], 'https') === FALSE) { // jika gambar berada di dalam folder ========?>
+                          <img class="shop-item-image" id="menu-pic" src="../../assets/gambar-menu/<?=$g['gambar'] ?>" />
+                          <?php } ?>
                           <div class="shop-item-details">
                             <span class="shop-item-price" id="menu-price">Rp <?= number_format($g['harga_menu'], 0, ',', '.')?></span>
                             <button class="btn btn-primary shop-item-button" id="add-menu" type="button">ADD DISH</button>

@@ -25,7 +25,7 @@
               <?php if ($level == "admin" || $level == "pelayan") { ?>
               <a class="nav-link" href="../menu/menu.php">
                 <span class="icon-bg"><i class="mdi mdi-currency-usd menu-icon"></i></span>
-                <span class="menu-title">menus</span>
+                <span class="menu-title">menu</span>
               </a>
               <?php } ?>
             </li>

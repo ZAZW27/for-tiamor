@@ -1,42 +1,8 @@
 <?php 
-include '../../config.php';
-SESSION_START();
-if ($_SESSION['level']=="") {
- header("location:../log/login.php");
-}
+include '../../partials/_header.php';
 
-// store the sessions
-$id=$_SESSION['id_user'];
-$nama = $_SESSION['nama'];
-$profile_user = $_SESSION['profile_user'];
-$level = $_SESSION['level'];
-$username = $_SESSION['username'];
-$alamat = $_SESSION['alamat'];
-$telpon = $_SESSION['telpon'];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Connect Plus</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css" />
-    <link rel="stylesheet" href="../../assets/vendors/flag-icon-css/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css" />
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="../../assets/css/style.css" />
-    <link rel="stylesheet" href="../../assets/css/mycss.css?v=<?php echo time(); ?>" />
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
-  </head>
   <body>
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.php -->
@@ -52,7 +18,7 @@ $telpon = $_SESSION['telpon'];
             <div class="container">
               <?php if ($level == "admin" || $level == "kasir") {?>
                 <div class="add-new-record-btn">
-                  <a href="tambah.php"><i class="mdi mdi-plus-circle-outline new-record-icon"></i> <span class="new-record-text">Tambah barang baru</span>  </a>
+                  <a href="tambah.php"><i class="mdi mdi-plus-circle-outline new-record-icon"></i> <span class="new-record-text">Tambah Karyawan Baru</span>  </a>
                 </div>
               <?php } ?>   
               <div class="row row--top-20">
@@ -64,17 +30,15 @@ $telpon = $_SESSION['telpon'];
                           <th class="table__th"><input id="selectAll" type="checkbox" class="table__select-row" /></th>
                           <th class="table__th">Name</th>
                           <?php if ($level == "admin"){echo "<th class='table__th'>Password</th>";}?>
-                          <th class="table__th">No. Telp</th>
-                          <th class="table__th">Alamat</th>
                           <?php if ($level == "admin"){echo "<th class='table__th'>Action</th>";}?>
                         </tr>
                       </thead>
                       <tbody class="table__tbody">
                         <?php 
                           if ($level == "admin") {
-                            $query = mysqli_query($cons, "SELECT * FROM user ORDER BY nama ASC");
+                            $query = mysqli_query($cons, "SELECT * FROM tbl_user WHERE aktif = 1 ORDER BY nama_user ASC");
                           }else {
-                            $query = mysqli_query($cons, "SELECT * FROM user WHERE level='$level' ORDER BY nama ASC");
+                            $query = mysqli_query($cons, "SELECT * FROM tbl_user WHERE level ='$level' AND aktif = 1 ORDER BY nama_user ASC");
                           }
                           
 
@@ -89,35 +53,21 @@ $telpon = $_SESSION['telpon'];
                             <input id="" type="checkbox" class="table__select-row" />
                           </td>
                           <td class="table-row__td">
-                            <?php 
-                            if ($u['profile_user'] == '') {
-                            ?>
-                            <div class="table-row__img" style="background-image: url('../../assets/images/user_profile/default.png');"></div>
-                            <?php }
-                            else {
-                            ?>
-                            <div class="table-row__img" style="background-image: url('../../assets/images/user_profile/<?=$u['profile_user']?>');"></div>
-                            <?php } ?>
+                            
                             <div class="table-row__info">
-                              <p class="table-row__name "><?=$u['nama']?></p>
+                              <p class="table-row__name "><?=$u['nama_user']?></p>
                               <?php if ($u['level'] == 'admin') { ?>
-                              <span class="table-row__small status status--green"><?=$u['username']?></span>
-                              <?php }elseif ($u['level'] == 'kasir') { ?>
-                              <span class="table-row__small status status--yellow"><?=$u['username']?></span>
-                              <?php }elseif ($u['level'] == 'gudang') { ?>
-                              <span class="table-row__small status status--red"><?=$u['username']?></span>
+                              <span class="table-row__small status status--green">Admin</span>
+                              <?php }elseif ($u['level'] == 'chef') { ?>
+                              <span class="table-row__small status status--red">Chef</span>
+                              <?php }elseif ($u['level'] == 'pelayan') { ?>
+                              <span class="table-row__small status status--yellow">Pelayan</span>
                               <?php } ?>
                             </div>
                           </td>
                           <?php if ($level =="admin") {?>
                           <td data-column="Password" class="table-row__td"><?=$u['password']?></td>
                           <?php } ?>
-                          <td data-column="No. Tlp" class="table-row__td">
-                            <div class="">
-                              <p class="table-row__policy"><?=$u['telpon']?></p>
-                            </div>
-                          </td>
-                          <td data-column="Alamat" class="table-row__td"><?=$u['alamat']?></td>
                           <?php if ($level == "admin"){?>
                             <td class="table-row__td">
                               <a href="update.php?id=<?=$u['id_user']?>">

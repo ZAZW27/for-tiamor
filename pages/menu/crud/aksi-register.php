@@ -8,7 +8,6 @@ $id_user=$_POST['id'];
 if (isset($_POST['id_barang'], $_POST['quantity_barang'])) {
     $id_barang=$_POST['id_barang'];
     $quantitas=$_POST['quantity_barang'];
-    $pemesan=$_POST['pemesan'];
     $meja=$_POST['meja'];
 
     $getIdPesanan = mysqli_query($cons, "SELECT kode_pesanan FROM tbl_pesanan ORDER BY kode_pesanan DESC LIMIT 1");
@@ -37,10 +36,19 @@ if (isset($_POST['id_barang'], $_POST['quantity_barang'])) {
         // mengambil barang barang yang tidak ada di sql 
         $total_harga = $data['harga_menu'] * $quantitas[$j];
         $jumlah_barang = $quantitas[$j];
-    
-        $input = mysqli_query($cons, "INSERT INTO tbl_pesanan 
-        (kode_pesanan, nama_pelanggan, deskripsi_meja, id_user, id_menu, total_bayar, status, kuantitas)
-        VALUES ('$new_id_pesanan', '$pemesan', '$meja', '$id_user', '$v', '$total_harga', '0', '$jumlah_barang')");
+        
+        if (isset($_POST['id_barang'])) {
+            $pemesan=$_POST['pemesan'];
+
+            $input = mysqli_query($cons, "INSERT INTO tbl_pesanan 
+            (kode_pesanan, nama_pelanggan, deskripsi_meja, id_user, id_menu, total_bayar, status, kuantitas)
+            VALUES ('$new_id_pesanan', '$pemesan', '$meja', '$id_user', '$v', '$total_harga', '0', '$jumlah_barang')");
+        }else {
+            $input = mysqli_query($cons, "INSERT INTO tbl_pesanan 
+            (kode_pesanan, nama_pelanggan, deskripsi_meja, id_user, id_menu, total_bayar, status, kuantitas)
+            VALUES ('$new_id_pesanan', 'Anonymous', '$meja', '$id_user', '$v', '$total_harga', '0', '$jumlah_barang')");
+
+        }
     
         $j += 1;
     
@@ -54,7 +62,7 @@ if (isset($_POST['id_barang'], $_POST['quantity_barang'])) {
     }    
 }
 else {
-    echo"<script>alert('GAGAL: Tidak ada barang yang dimasuki!');window.location='../menu.php';</script>";
+    // echo"<script>alert('GAGAL: Tidak ada barang yang dimasuki!');window.location='../menu.php';</script>";
 }
 
 

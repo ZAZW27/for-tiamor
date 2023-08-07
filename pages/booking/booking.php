@@ -1,18 +1,6 @@
 <?php 
-include '../../config.php';
-SESSION_START();
-if ($_SESSION['tipe_user']=="") {
- header("location:../log/login.php");
-}
+include '../../partials/_header.php';
 
-// store the sessions
-$id=$_SESSION['id_user'];
-$nama = $_SESSION['nama'];
-$profile_user = $_SESSION['profile_user'];
-$tipe_user = $_SESSION['tipe_user'];
-$username = $_SESSION['username'];
-$alamat = $_SESSION['alamat'];
-$telpon = $_SESSION['telpon'];
 ?>
 
 <!DOCTYPE html>

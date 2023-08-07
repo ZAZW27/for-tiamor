@@ -1,18 +1,6 @@
 <?php 
-include '../../config.php';
-SESSION_START();
-if ($_SESSION['tipe_user']=="") {
- header("location:../log/login.php");
-}
+include '../../partials/_header.php';
 
-// store the sessions
-$id=$_SESSION['id_user'];
-$nama = $_SESSION['nama'];
-$profile_user = $_SESSION['profile_user'];
-$tipe_user = $_SESSION['tipe_user'];
-$username = $_SESSION['username'];
-$alamat = $_SESSION['alamat'];
-$telpon = $_SESSION['telpon'];
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +35,7 @@ $telpon = $_SESSION['telpon'];
         <?php include '../../partials/_sidebar.php' ?>
         <!-- partial -->
         <div class="main-panel">
-          <?php if ($tipe_user == 'admin') {?>
+          <?php if ($level == 'admin') {?>
           <div class="form-wrapping" >
           <?php } else {?>
           <div class="form-wrapping" hidden>
@@ -59,30 +47,20 @@ $telpon = $_SESSION['telpon'];
                     <div class="wrapping">
                       <div class="boxing">
                         <div class="inputbox">
-                            <input type="text" class="form-control" id="nama" placeholder="" name="nama" required />
-                            <label class="hover-input" for="nama" class="form-label">Nama</label>
-                        </div>
-                        <div class="inputbox">
-                            <input type="text" class="form-control" id="kelas" placeholder="" name="username" required />
+                            <input type="text" class="form-control" id="nama" placeholder="" name="nama_user" required />
                             <label class="hover-input" for="nama" class="form-label">Username</label>
-                        </div>
-                        <div class="inputbox">
-                          <input type="text" class="form-control" id="kelas" placeholder="" name="alamat" required />
-                            <label class="hover-input" for="nama" class="form-label">Alamat</label>
-                        </div>
-                      </div>
-                      <div class="boxing">
+                        </div>   
                         <div class="inputbox">
                             <input type="text" class="form-control" id="nama" placeholder="" name="password" required />
                             <label class="hover-input" for="nama" class="form-label">Password</label>
                         </div>
+                      </div>
+                      <div class="boxing">
                         <div class="inputbox">
-                            <input type="number" class="form-control" id="kelas" placeholder="" name="telp" required />
-                            <label class="hover-input" for="nama" class="form-label">Telp</label>
-                        </div>
-                        <div class="inputbox">
-                            <input type="text" class="form-control" id="kelas" placeholder="" name="tipe" required />
-                            <label class="hover-input" for="nama" class="form-label">Tipe kerjaan</label>
+                        <select id="level" name="level" required  style=""  >
+                                <option value="pelayan">Pelayan</option>
+                                <option value="chef">Chef</option>
+                          </select>
                         </div>
                       </div>
                     </div>

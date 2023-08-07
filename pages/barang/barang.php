@@ -3,9 +3,6 @@ include '../../partials/_header.php';
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -23,7 +20,7 @@ include '../../partials/_header.php';
     <link rel="stylesheet" href="../../assets/css/style.css" />
     <link rel="stylesheet" href="../../assets/css/mycss.css?v=<?php echo time(); ?>" />
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+    
   </head>
   <body>
     <div class="container-scroller">
@@ -38,7 +35,7 @@ include '../../partials/_header.php';
           <div class="content-wrapper table-content">     
             <!-- MAIN TABLE -->
             <div class="container">
-            <?php if ($tipe_user == "admin" || $tipe_user == "gudang") {?>
+            <?php if ($level == "admin" || $level == "gudang") {?>
               <div class="add-new-record-btn">
                <a href="tambah.php"><i class="mdi mdi-plus-circle-outline new-record-icon"></i> <span class="new-record-text">Tambah barang baru</span>  </a>
               </div>
@@ -49,16 +46,14 @@ include '../../partials/_header.php';
                     <table class="table" id="data-table-default">
                       <thead class="table__thead">
                         <tr>
-                          <th class="table__th">Kode</th>
+                          <th class="table__th">Jenis Makanan</th>
                           <th class="table__th">Name barang</th>
-                          <th class="table__th">Jumlah & Jenis</th>
-                          <th class="table__th">Expires</th>
-                          <?php if ($tipe_user == "admin" || $tipe_user == "gudang"){echo "<th class='table__th'>Action</th>";}?>
+                          <?php if ($level == "admin" || $level == "pelayan"){echo "<th class='table__th'>Action</th>";}?>
                         </tr>
                       </thead>
                       <tbody class="table__tbody">
                         <?php 
-                          $query = mysqli_query($cons, "SELECT * FROM tbl_barang ORDER BY kode_barang ASC");
+                          $query = mysqli_query($cons, "SELECT * FROM tbl_menu ORDER BY jenis_pangan ASC");
 
                           $no = 1;
 
@@ -69,33 +64,22 @@ include '../../partials/_header.php';
                         <tr class="table-row">
                           <td class="table-row__td">
                             <div class="">
-                            <?php if ($u['jumlah_barang'] == 0) {?>
-                              <p class="table-row__policy status status--red"><?=$u['kode_barang']?></p>
+                            <?php if ($u['jenis_pangan'] == 0) {?>
+                              <p class="table-row__policy status status--red"><?=$u['jenis_pangan']?></p>
                             <?php } else { ?>
-                              <p class="table-row__policy"><?=$u['kode_barang']?></p>
+                              <p class="table-row__policy"><?=$u['jenis_pangan']?></p>
                             <?php } ?>
                             </div>
                           </td>
                           <td class="table-row__td">
                             <div class="table-row__info">
-                              <p class="table-row__name"><?=$u['nama_barang']?></p>
-                              <span class="table-row__small status--red">Rp <?=number_format($u['harga_satuan'], 0,',','.')?></span>
+                              <p class="table-row__name"><?=$u['nama_menu']?></p>
+                              <span class="table-row__small status--red">Rp <?=number_format($u['harga_menu'], 0,',','.')?></span>
                             </div>
                           </td>
-                          <td data-column="Jumlah & Satuan" class="table-row__td">
-                            <div class="table-row__info">
-                              <?php if ($u['jumlah_barang'] == 0) {?>
-                              <p class="table-row__policy status--red"><?=$u['jumlah_barang']?></p>
-                              <?php }else { ?>
-                              <p class="table-row__policy"><?=$u['jumlah_barang']?></p>
-                              <?php } ?>
-                              <span class="table-row__small"><?=$u['satuan']?></span>
-                            </div>
-                          </td>
-                          <td data-column="Expiration" class="table-row__td"><?=$u['expired_date']?></td>
-                          <?php if ($tipe_user == "admin" || $tipe_user == "gudang"){?>
+                          <?php if ($level == "admin" || $level == "gudang"){?>
                             <td class="table-row__td">
-                              <a href="update.php?id=<?=$u['id_barang']?>">
+                              <a href="update.php?id=<?=$u['id_menu']?>">
                                 <svg
                                   version="1.1"
                                   class="table-row__edit"

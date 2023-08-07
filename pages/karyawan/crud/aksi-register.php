@@ -1,15 +1,12 @@
 <?php 
 include '../../../config.php';
 
-$nama=$_POST['nama'];
-$username=$_POST['username'];
-$alamat=$_POST['alamat'];
+$nama=$_POST['nama_user'];
 $password=$_POST['password'];
-$telp=$_POST['telp'];
-$tipe=$_POST['tipe'];
+$level=$_POST['level'];
 
-$input = mysqli_query($cons, "INSERT INTO user (nama, username, alamat, password, telpon, tipe_user, profile_user)
-VALUES ('$nama', '$username', '$alamat', '$password', '$telp', '$tipe', 'default.png')");
+$input = mysqli_query($cons, "INSERT INTO tbl_user (nama_user, password, aktif, level)
+VALUES ('$nama', '$password', '1', '$level')");
 
 if ($input) {
     echo"<script>alert('BERHASIL: $nama sudah mengikuti perusahaan kita!');window.location='../karyawan.php';</script>";

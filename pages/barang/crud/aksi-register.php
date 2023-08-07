@@ -1,35 +1,43 @@
 <?php 
 include '../../../config.php';
 
-$id=$_POST['id'];
-$nama=$_POST['nama'];
-$kode=$_POST['kode'];
-$expire=$_POST['expire'];
-$jumlah=$_POST['jumlah'];
-$satuan=$_POST['satuan'];
-$harga=$_POST['harga'];
+$nama=$_POST['nama_menu'];
+$harga=$_POST['harga_menu'];
+$jenis_pangan=$_POST['jenis_pangan'];
+$deskripsi=$_POST['deskripsi'];
+$gambar_menu = $_FILES['gambar_menu']['name'];
 
-$input = mysqli_query($cons, "INSERT INTO tbl_barang (nama_barang, kode_barang, expired_date, jumlah_barang, satuan, harga_satuan)
-VALUES ('$nama', '$kode', '$expire', '$jumlah', '$satuan', '$harga')");
+if (isset($_FILES['gambar_menu'])) {
+    $x = explode('.', $gambar_menu);//memisahkan nama file dengan ekstensi yang diupload
+    $ekstensi = strtolower(end($x));
+    $file_tmp = $_FILES['gambar_menu']['tmp_name'];
+    $angka_acak = rand(1,999);
+    $nama_gambar_baru = $angka_acak.'-'.$gambar_menu;/* menggabungkan angka acak dengan */
 
-if ($input) {
-    // Mengambil waktu
-    date_default_timezone_set('Asia/Ujung_pandang');
-    $time = time();
-    $date = date("Y-m-d H:i:s", $time);
+    move_uploaded_file($file_tmp, '../../../assets/gambar-menu/'.$nama_gambar_baru);/* memindah file */
 
-    // mengambil id user
-    $logging = mysqli_query($cons, "INSERT INTO tbl_log (waktu, aktivitas, id_user)
-    VALUES ('$date', 'Masuk barang', '$id')");
-    if ($logging) {
-        echo"<script>alert('BERHASIL: $nama sudah dimasukkan!');window.location='../barang.php';</script>";
+    $query = mysqli_query($cons, "INSERT INTO tbl_menu (nama_menu, harga_menu, jenis_pangan, deskripsi, gambar) 
+    VALUES ('$nama', '$harga', '$jenis_pangan','$deskripsi','$nama_gambar_baru')");
+    //periksa query apakah ada error
+    if (!$query) {
+        die("Query gagal dijalankan: ".mysqli_errno($cons).
+        " - ".mysqli_error($cons));
+    } else {
+    //tampil alert danakan redirect ke halaman index.php
+    echo "<script>alert('Data berhasil ditambah.');window.location='../tambah.php';</script>";
     }
-    else {
-        echo"<script>alert('GAGAL: memasukkan login');window.location='../barang.php';</script>";
-    }
-    
+    // echo "gambar is added";
 }else {
-    echo"<script>alert('Gagal memasuki $nama');window.location='../barang.php';</script>";
+    $query = mysqli_query($cons, $query, "INSERT INTO tbl_menu (nama_menu, harga_menu, jenis_pangan, deskripsi, gambar) 
+    VALUES ('$nama', '$harga', '$jenis_pangan','$deskripsi', NULL)");
+    //periksa query apakah ada error
+    if (!$query) {
+        die("Query gagal dijalankan: ".mysqli_errno($cons)." - ".mysqli_error($cons));
+    } else {
+    //tampil alert danakan redirect ke halaman index.php
+    echo "<script>alert('Data berhasil ditambah.');window.location='../tambah.php';</script>";
+    }
+    // echo "gambar i not added";
 }
 
 ?>

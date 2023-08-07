@@ -1,18 +1,6 @@
 <?php 
-include '../../config.php';
-SESSION_START();
-if ($_SESSION['tipe_user']=="") {
- header("location:../log/login.php");
-}
+include '../../partials/_header.php';
 
-// store the sessions
-$id=$_SESSION['id_user'];
-$nama = $_SESSION['nama'];
-$profile_user = $_SESSION['profile_user'];
-$tipe_user = $_SESSION['tipe_user'];
-$username = $_SESSION['username'];
-$alamat = $_SESSION['alamat'];
-$telpon = $_SESSION['telpon'];
 ?>
 
 <!DOCTYPE html>
@@ -58,16 +46,15 @@ $telpon = $_SESSION['telpon'];
                     <table class="table" id="data-table-default">
                       <thead class="table__thead">
                         <tr>
-                          <th class="table__th">NO</th>
-                          <th class="table__th">No Transaksi</th>
-                          <th class="table__th">Tanggal transaksi</th>
+                          <th class="table__th">No Penjualan</th>
+                          <th class="table__th">Tanggal Penjualan</th>
                           <th class="table__th">Total bayar</th>
-                          <th class="table__th">Barang</th>
+                          <th class="table__th">Menu</th>
                         </tr>
                       </thead>
                       <tbody class="table__tbody">
                         <?php 
-                          $query = mysqli_query($cons, "SELECT * FROM tbl_transaksi INNER JOIN tbl_barang ON tbl_barang.id_barang=tbl_transaksi.id_barang GROUP BY no_transaksi ORDER BY tgl_transaksi DESC");
+                          $query = mysqli_query($cons, "SELECT * FROM tbl_pesanan INNER JOIN tbl_menu ON tbl_menu.id_menu=tbl_pesanan.id_menu GROUP BY kode_pesanan ORDER BY tanggal_order DESC;");
 
                           $no = 1;
 
@@ -77,25 +64,20 @@ $telpon = $_SESSION['telpon'];
                         ?>
                         <tr class="table-row">
                           <td class="table-row__td">
-                            <div class="">
-                              <p class="table-row__policy"><?=$no++ ?></p>
-                            </div>
-                          </td>
-                          <td class="table-row__td">
                             <div class="table-row__info">
-                              <p class="table-row__name"><?=$u['no_transaksi']?></p>
+                              <p class="table-row__name"><?=$u['kode_pesanan']?></p>
                             </div>
                           </td>
                           <td data-column="Jumlah & Satuan" class="table-row__td">
                             <div class="table-row__info">
-                                <p class="table-row__policy"><?=$u['tgl_transaksi']?></p>
+                                <p class="table-row__policy"><?=$u['tanggal_order']?></p>
                             </div>
                           </td>
                           <td data-column="Jumlah & Satuan" class="table-row__td">
                             <div class="table-row__info">
                               <?php 
-                              $id_trans = $u['no_transaksi'];
-                              $query3 = mysqli_query($cons, "SELECT * FROM tbl_transaksi WHERE no_transaksi='$id_trans'");
+                              $id_trans = $u['kode_pesanan'];
+                              $query3 = mysqli_query($cons, "SELECT * FROM tbl_pesanan WHERE kode_pesanan='$id_trans'");
                               if ($query3) {
                                 $hargaTotal = 0;
                                 while ($total = mysqli_fetch_array($query3)) {
@@ -113,11 +95,11 @@ $telpon = $_SESSION['telpon'];
                               <table class="table_barang_row">
                                 <tbody>
                                   <?php 
-                                  $query4 = mysqli_query($cons, "SELECT * FROM tbl_transaksi INNER JOIN tbl_barang ON tbl_barang.id_barang=tbl_transaksi.id_barang WHERE no_transaksi='$id_trans'");
+                                  $query4 = mysqli_query($cons, "SELECT * FROM tbl_pesanan INNER JOIN tbl_menu ON tbl_menu.id_menu=tbl_pesanan.id_menu WHERE kode_pesanan='$id_trans'");
                                   while ($namaBarang = mysqli_fetch_array($query4)) {?>
                                   <tr>
                                     <td class="nama_barang_cell">
-                                      <p class="table-row__policy "><?=$namaBarang['nama_barang']?> </p>
+                                      <p class="table-row__policy "><?=$namaBarang['nama_menu']?> </p>
                                     </td>
                                     <td class="kuantitas_barang_cell">
                                       <p class="table-row__policy "><?=$namaBarang['kuantitas']?> </p>
